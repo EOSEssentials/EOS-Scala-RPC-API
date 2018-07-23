@@ -17,7 +17,7 @@ trait Settings {
   private val currentApiVersion = "v1"
   case class EosSettings(nodes:List[String]){
     def node:String = s"${nodes.head}/$currentApiVersion/"
-    def uri(route:String):String = node + "/" + (if(route.head=='/') route.drop(1) else route)
+    def uri(route:String):String = node + (if(route.head=='/') route.drop(1) else route)
   }
   val eosSettings:EosSettings = EosSettings(
     config.getStringList("eos.nodes").asScala.toList.map(x => if(x.last=='/') x dropRight 1 else x)
